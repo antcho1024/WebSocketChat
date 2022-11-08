@@ -1,22 +1,4 @@
-#intellij?? static ??? ??? ? ??? ??? ?? ??? ??? ??? ?? ??? ??? ?? ?? ???.
-#spring:
-#  config:
-#    activate:
-#      on-profile: local
-##  profiles:
-##    active: local
-#  devtools:
-#    livereload:
-#      enabled: true
-#    restart:
-#      enabled: false
-#  freemarker:
-#    cache: false
-#    suffix: .ftl # circular viewer ?? ??
-
 spring:
-  profiles:
-    active: alpha
   redis:
     host: 127.0.0.1
     port: 6379
