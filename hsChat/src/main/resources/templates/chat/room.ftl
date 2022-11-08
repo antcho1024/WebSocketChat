@@ -76,7 +76,7 @@
                     var sender = prompt('대화명을 입력해 주세요.');
                     localStorage.setItem('wschat.sender',sender);
                     localStorage.setItem('wschat.roomId',roomId);
-                    location.href="/chat/room/enter/"+roomId;
+                    location.href="/chat/example/room/enter/"+roomId;
                 }
             }
         });

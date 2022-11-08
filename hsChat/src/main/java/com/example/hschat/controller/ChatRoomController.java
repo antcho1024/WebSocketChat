@@ -18,7 +18,7 @@ public class ChatRoomController {
     private final ChatRoomRepository chatRoomRepository;
 
     // 채팅 리스트 화면
-    @GetMapping("/room")
+    @GetMapping("/example/room")
     public String rooms(Model model) {
         return "/chat/room";
     }
@@ -37,6 +37,11 @@ public class ChatRoomController {
     // 채팅방 입장 화면
     @GetMapping("/room/enter/{roomId}")
     public String roomDetail(Model model, @PathVariable String roomId) {
+        model.addAttribute("roomId", roomId);
+        return roomId;
+    }
+    @GetMapping("/example/room/enter/{roomId}")
+    public String roomDetailExample(Model model, @PathVariable String roomId) {
         model.addAttribute("roomId", roomId);
         return "/chat/roomdetail";
     }
