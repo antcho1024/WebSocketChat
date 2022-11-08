@@ -1,26 +1,23 @@
 package com.example.hschat.controller;
 
-import com.example.hschat.dto.ChatRoom;
-import com.example.hschat.service.ChatService;
+import com.example.hschat.dto.ChatMessage;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.stereotype.Controller;
 
 @RequiredArgsConstructor
-@RestController
-@RequestMapping("/chat")
+@Controller
 public class ChatController {
 
-    private final ChatService chatService;
+    private final SimpMessageSendingOperations messagingTemplate;
 
-    @PostMapping
-    public ChatRoom createRoom(@RequestParam String name) {
-        return chatService.createRoom(name);
+    @MessageMapping("/chat/message")
+    // "pub/chat/message"를 통해 메세지 보내면 /sub/chat/room/{} 을 구독하고 있는 사람들한테 메세지 보내줌
+    public void message(ChatMessage message) {
+        if (ChatMessage.MessageType.ENTER.equals(message.getType())) // 입장한거면 이 과정 거쳐서 메세지 만들고
+            message.setMessage(message.getSender() + "님이 입장하셨습니다.");
+        messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }
-
-    @GetMapping
-    public List<ChatRoom> findAllRoom() {
-        return chatService.findAllRoom();
-    }
+    // 이전에 Handler 에서 하던일 여기서 함
 }
